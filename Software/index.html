@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Inventory Management</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #d0e6f7, #3a5d99);
+        color: white;
+        height: 100vh;
+        background-attachment: fixed; /* Ensures the gradient stays fixed */
+        background-size: cover; /* Ensures the gradient covers the entire viewport */
+    }      
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #ffffff;
+      color: #000;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #3a5d99;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .add-rack-button {
+      display: block;
+      margin: 0 auto;
+      background: #3a5d99;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .add-rack-button:hover {
+      background: #2e4c7d;
+    }
+    .rack-list {
+      margin-top: 20px;
+    }
+    .rack {
+      margin-bottom: 20px;
+    }
+    iframe {
+      width: 100%;
+      height: 30vh; /* 30% of the viewport height */
+      border: 2px solid #3a5d99;
+      border-radius: 8px;
+    }
+    .rack-info {
+      color: #3a5d99;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Smart Inventory Management</h1>
+    <button class="add-rack-button" onclick="addRack()">Add Rack</button>
+    <div class="rack-list" id="rackList"></div>
+  </div>
+
+  <script>
+    function addRack() {
+      const code = prompt("Enter the code (e.g., 192.168.1.1):");
+      if (code && isValidCode(code)) {
+        const rackList = document.getElementById('rackList');
+        const newRack = document.createElement('div');
+        newRack.className = 'rack';
+        newRack.innerHTML = `
+          <div class="rack-info">Rack: ${code}</div>
+          <iframe src="http://${code}" title="Rack ${code}"></iframe>
+        `;
+        rackList.appendChild(newRack);
+      } else if (code !== null) {
+        alert('Invalid code format! Please try again.');
+      }
+    }
+
+    function isValidCode(code) {
+      const ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
+      return ipRegex.test(code);
+    }
+  </script>
+</body>
+</html>
